@@ -14,9 +14,9 @@ const BASEContact = [
 ];
 export const App = () => {
   const [contacts, setContacts] = useState(
-    JSON.parse(localStorage.getItem('user-contact')) || BASEContact
+    JSON.parse(localStorage.getItem('user-contact')) || localStorage.setItem('user-contact', JSON.stringify(BASEContact))
   );
-  const [filtered] = useState(' ');
+  const [filtered,setFiltered] = useState(' ');
   // const [bad, setBad] = useState(0);
 
   // useEffect(() => {
@@ -33,6 +33,9 @@ export const App = () => {
     
    localStorage.setItem('user-contact', JSON.stringify(contacts));
   }, [contacts]);
+    useEffect(() => {
+      localStorage.setItem('user-contact', JSON.stringify(contacts));
+    }, [contacts]);
 
   //  componentDidMount() {
   //   const savedUserState = localStorage.getItem('user-contact') ;
@@ -78,7 +81,7 @@ export const App = () => {
   // onFilter();
   // слідкування за вводом на інпутах
   const handleFind = ({ target }) => {
-    this.setState({ [target.name]: target.value });
+    setFiltered(target.value.toLowerCase().trim());
   };
 
   const normalizedFilter = filtered.toLowerCase();
